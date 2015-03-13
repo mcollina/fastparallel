@@ -1,5 +1,5 @@
 
-var max = 100000
+var max = 1000000
 var parallel = require('./')()
 var async = require('async')
 var obj = {}

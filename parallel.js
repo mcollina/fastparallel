@@ -30,14 +30,20 @@ function parallel (released) {
 function Holder (_release) {
   this._count = -1
   this._callback
+  this._results = []
+  this._err = null
 
   var that = this
-  this.release = function () {
+  this.release = function (err, result) {
     that._count--
 
+    that._err = err
+    that._results.push(result)
     if (that._count === 0) {
-      that._callback()
+      that._callback(that._err, that._results)
       that._callback = nop
+      that._results = []
+      that._err = null
       _release(that)
     }
   }
