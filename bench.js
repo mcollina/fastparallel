@@ -23,7 +23,7 @@ function bench (func, done) {
   }
 }
 
-function benchParallel(done) {
+function benchFastParallel(done) {
   parallel({}, [somethingP, somethingP, somethingP], 42, done)
 }
 
@@ -31,8 +31,22 @@ function benchAsync(done) {
   async.parallel([somethingA, somethingA, somethingA], done)
 }
 
+var nextDone;
+var nextCount;
+
 function benchSetImmediate(done) {
-  setImmediate(done)
+  nextCount = 3
+  nextDone = done
+  setImmediate(somethingImmediate)
+  setImmediate(somethingImmediate)
+  setImmediate(somethingImmediate)
+}
+
+function somethingImmediate() {
+  nextCount--
+  if (nextCount === 0) {
+    nextDone()
+  }
 }
 
 function somethingP(arg, cb) {
@@ -43,7 +57,7 @@ function somethingA(cb) {
   setImmediate(cb)
 }
 
-bench(benchParallel, function() {
+bench(benchFastParallel, function() {
   bench(benchAsync, function() {
     bench(benchSetImmediate)
   })

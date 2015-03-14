@@ -1,7 +1,15 @@
-function parallel (released) {
-  var queue = []
+var xtend = require('xtend')
+var defaults = {
+  released: nop,
+  maxCache: 42
+}
 
-  released = released || nop
+function parallel (options) {
+  options = xtend(defaults, options)
+
+  var queue = []
+  var released = options.released
+  var maxCache = options.maxCache
 
   function instance (that, toCall, arg, done) {
     var holder = queue.shift()
@@ -20,7 +28,9 @@ function parallel (released) {
   }
 
   function release (holder) {
-    queue.push(holder)
+    if (queue.length < maxCache) {
+      queue.push(holder)
+    }
     released()
   }
 
