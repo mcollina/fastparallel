@@ -119,3 +119,20 @@ test('does not forward errors or result with results:false flag', function (t) {
     t.pass()
   }
 })
+
+test('should call done and released if an empty is passed', function (t) {
+  t.plan(2)
+
+  var instance = parallel({
+    released: released
+  })
+  var obj = {}
+
+  instance(obj, [], 42, function done () {
+    t.pass()
+  })
+
+  function released() {
+    t.pass()
+  }
+})
