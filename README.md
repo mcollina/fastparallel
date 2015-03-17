@@ -4,11 +4,12 @@ Zero-overhead parallel function call for node.js.
 
 Benchmark for doing 3 calls `setImmediate` 1 million times:
 
-* `async.parallel`: 5953ms
-* `fastparallel`: 2664ms
-* non-reusable `setImmediate`: 2221ms
+* `async.parallel`: 6411ms
+* `fastparallel` with results: 2960ms
+* `fastparallel` without results: 2548ms
+* non-reusable `setImmediate`: 2545ms
 
-These benchmarks where taken via `bench.js` on iojs 1.5.0, on a MacBook
+These benchmarks where taken via `bench.js` on iojs 1.5.1, on a MacBook
 Pro Retina 2014.
 
 ## Example
@@ -19,9 +20,8 @@ var parallel = require('fastparallel')({
   // when a parallel completes
   released: completed,
 
-  // the maximum number of elements in the cache,
-  // tune accordingly
-  maxCache: 42
+  // if you want the results, then here you are
+  results: true
 })
 
 parallel(
@@ -46,7 +46,7 @@ function completed() {
 
 ## Caveats
 
-The `results` object will be non-ordered, and the `done` function will
+The `results` array will be non-ordered, and the `done` function will
 be called only once, even if more than one error happen.
 
 This library works by caching functions, so that running a new parallel

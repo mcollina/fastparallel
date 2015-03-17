@@ -1,6 +1,7 @@
 
 var max = 1000000
 var parallel = require('./')()
+var parallelNoResults = require('./')({ results: false })
 var async = require('async')
 var obj = {}
 
@@ -25,6 +26,10 @@ function bench (func, done) {
 
 function benchFastParallel(done) {
   parallel({}, [somethingP, somethingP, somethingP], 42, done)
+}
+
+function benchFastParallelNoResults(done) {
+  parallelNoResults({}, [somethingP, somethingP, somethingP], 42, done)
 }
 
 function benchAsync(done) {
@@ -58,7 +63,9 @@ function somethingA(cb) {
 }
 
 bench(benchFastParallel, function() {
-  bench(benchAsync, function() {
-    bench(benchSetImmediate)
+  bench(benchFastParallelNoResults, function() {
+    bench(benchAsync, function() {
+      bench(benchSetImmediate)
+    })
   })
 })
