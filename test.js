@@ -89,3 +89,33 @@ test('fowards errs', function (t) {
     t.pass()
   }
 })
+
+test('does not forward errors or result with results:false flag', function (t) {
+  t.plan(8)
+
+  var instance = parallel({
+    released: released,
+    results: false
+  })
+  var count = 0
+  var obj = {}
+
+  instance(obj, [something, something], 42, function done (err, results) {
+    t.equal(err, undefined, 'no err')
+    t.equal(results, undefined, 'no err')
+    t.equal(count, 2, 'all functions must have completed')
+  })
+
+  function something (arg, cb) {
+    t.equal(obj, this)
+    t.equal(arg, 42)
+    setImmediate(function () {
+      count++
+      cb()
+    })
+  }
+
+  function released() {
+    t.pass()
+  }
+})

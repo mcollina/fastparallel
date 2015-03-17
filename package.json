@@ -30,7 +30,7 @@
     "async": "^0.9.0",
     "faucet": "0.0.1",
     "pre-commit": "^1.0.6",
-    "standard": "^2.11.0",
+    "standard": "^3.0.0",
     "tape": "^3.5.0"
   },
   "dependencies": {

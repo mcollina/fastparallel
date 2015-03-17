@@ -1,7 +1,8 @@
 var xtend = require('xtend')
 var defaults = {
   released: nop,
-  maxCache: 42
+  maxCache: 42,
+  results: true
 }
 
 function parallel (options) {
@@ -10,6 +11,8 @@ function parallel (options) {
   var queue = []
   var released = options.released
   var maxCache = options.maxCache
+
+  var Holder = options.results ? ResultsHolder : NoResultsHolder
 
   function instance (that, toCall, arg, done) {
     var holder = queue.shift()
@@ -37,7 +40,23 @@ function parallel (options) {
   return instance
 }
 
-function Holder (_release) {
+function NoResultsHolder (_release) {
+  this._count = -1
+  this._callback
+
+  var that = this
+  this.release = function (err, result) {
+    that._count--
+
+    if (that._count === 0) {
+      that._callback()
+      that._callback = nop
+      _release(that)
+    }
+  }
+}
+
+function ResultsHolder (_release) {
   this._count = -1
   this._callback
   this._results = []
