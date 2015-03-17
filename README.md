@@ -12,6 +12,8 @@ Benchmark for doing 3 calls `setImmediate` 1 million times:
 These benchmarks where taken via `bench.js` on iojs 1.5.1, on a MacBook
 Pro Retina 2014.
 
+[![js-standard-style](https://raw.githubusercontent.com/feross/standard/master/badge.png)](https://github.com/feross/standard)
+
 ## Example
 
 ```js
