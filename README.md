@@ -49,7 +49,7 @@ function completed() {
 The `results` array will be non-ordered, and the `done` function will
 be called only once, even if more than one error happen.
 
-This library works by caching functions, so that running a new parallel
+This library works by caching the latest used function, so that running a new parallel
 does not cause **any memory allocations**.
 
 ## License
