@@ -23,7 +23,7 @@ test('basically works', function (t) {
     })
   }
 
-  function released() {
+  function released () {
     t.pass()
   }
 })
@@ -52,7 +52,7 @@ test('accumulates results', function (t) {
     })
   }
 
-  function released() {
+  function released () {
     t.pass()
   }
 })
@@ -85,7 +85,7 @@ test('fowards errs', function (t) {
     })
   }
 
-  function released() {
+  function released () {
     t.pass()
   }
 })
@@ -115,7 +115,7 @@ test('does not forward errors or result with results:false flag', function (t) {
     })
   }
 
-  function released() {
+  function released () {
     t.pass()
   }
 })
@@ -132,7 +132,7 @@ test('should call done and released if an empty is passed', function (t) {
     t.pass()
   })
 
-  function released() {
+  function released () {
     t.pass()
   }
 })
@@ -145,7 +145,7 @@ test('each support', function (t) {
   })
   var count = 0
   var obj = {}
-  var args = [1,2,3]
+  var args = [1, 2, 3]
   var i = 0
 
   instance(obj, something, args, function done () {
@@ -155,13 +155,13 @@ test('each support', function (t) {
   function something (arg, cb) {
     t.equal(obj, this, 'this matches')
     t.equal(args[i++], arg, 'the arg is correct')
-    setImmediate(function() {
+    setImmediate(function () {
       count++
       cb()
     })
   }
 
-  function released() {
+  function released () {
     t.pass()
   }
 })

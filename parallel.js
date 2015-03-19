@@ -8,7 +8,6 @@ function parallel (options) {
   options = xtend(defaults, options)
 
   var released = options.released
-  var maxCache = options.maxCache
   var Holder = options.results ? ResultsHolder : NoResultsHolder
   var last = new Holder(release)
 
@@ -51,7 +50,7 @@ function NoResultsHolder (_release) {
   this._callback = nop
 
   var that = this
-  this.release = function (err, result) {
+  this.release = function () {
     that._count--
 
     if (that._count === 0) {
