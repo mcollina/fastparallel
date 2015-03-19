@@ -32,8 +32,24 @@ function benchFastParallelNoResults(done) {
   parallelNoResults({}, [somethingP, somethingP, somethingP], 42, done)
 }
 
-function benchAsync(done) {
+function benchFastParallelEach(done) {
+  parallelNoResults({}, somethingP, [1, 2, 3], done)
+}
+
+function benchFastParallelEachResults(done) {
+  parallel({}, somethingP, [1, 2, 3], done)
+}
+
+function benchAsyncParallel(done) {
   async.parallel([somethingA, somethingA, somethingA], done)
+}
+
+function benchAsyncEach(done) {
+  async.each([1, 2, 3], somethingP, done)
+}
+
+function benchAsyncMap(done) {
+  async.map([1, 2, 3], somethingP, done)
 }
 
 var nextDone;
@@ -62,10 +78,13 @@ function somethingA(cb) {
   setImmediate(cb)
 }
 
-bench(benchFastParallel, function() {
-  bench(benchFastParallelNoResults, function() {
-    bench(benchAsync, function() {
-      bench(benchSetImmediate)
-    })
-  })
-})
+async.eachSeries([
+  benchFastParallel,
+  benchFastParallelNoResults,
+  benchAsyncParallel,
+  benchSetImmediate,
+  benchFastParallelEach,
+  benchFastParallelEachResults,
+  benchAsyncEach,
+  benchAsyncMap,
+], bench)

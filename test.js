@@ -136,3 +136,32 @@ test('should call done and released if an empty is passed', function (t) {
     t.pass()
   }
 })
+
+test('each support', function (t) {
+  t.plan(8)
+
+  var instance = parallel({
+    released: released
+  })
+  var count = 0
+  var obj = {}
+  var args = [1,2,3]
+  var i = 0
+
+  instance(obj, something, args, function done () {
+    t.equal(count, 3, 'all functions must have completed')
+  })
+
+  function something (arg, cb) {
+    t.equal(obj, this, 'this matches')
+    t.equal(args[i++], arg, 'the arg is correct')
+    setImmediate(function() {
+      count++
+      cb()
+    })
+  }
+
+  function released() {
+    t.pass()
+  }
+})

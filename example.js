@@ -3,20 +3,26 @@ var parallel = require('./')({
   // when a parallel completes
   released: completed,
 
-  // the maximum number of elements in the cache,
-  // tune accordingly
-  maxCache: 42
+  // we want results and errors
+  // passing false will make it faster!
+  results: true
 })
 
 parallel(
   {}, // what will be this in the functions
   [something, something, something], // functions to call
   42, // the first argument of the functions
-  done // the function to be called when the parallel ends
+  next // the function to be called when the parallel ends
 )
 
 function something(arg, cb) {
   setImmediate(cb, null, 'myresult')
+}
+
+function next(err, results) {
+  console.log('parallel completed, results:', results)
+
+  parallel({}, something, [1, 2, 3], done)
 }
 
 function done(err, results) {

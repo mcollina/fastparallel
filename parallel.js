@@ -22,11 +22,18 @@ function parallel (options) {
       done()
       released(last)
     } else {
-      holder._count = toCall.length
       holder._callback = done
 
-      for (i = 0; i < toCall.length; i++) {
-        toCall[i].call(that, arg, holder.release)
+      if (typeof toCall === 'function') {
+        holder._count = arg.length
+        for (i = 0; i < arg.length; i++) {
+          toCall.call(that, arg[i], holder.release)
+        }
+      } else {
+        holder._count = toCall.length
+        for (i = 0; i < toCall.length; i++) {
+          toCall[i].call(that, arg, holder.release)
+        }
       }
     }
   }
