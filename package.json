@@ -1,7 +1,7 @@
 {
   "name": "fastparallel",
-  "version": "1.1.1",
-  "description": "Zero-overhead async.parallel",
+  "version": "1.2.0",
+  "description": "Zero-overhead asynchronous parallel/each/map function call",
   "main": "parallel.js",
   "scripts": {
     "lint": "standard",
