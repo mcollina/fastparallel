@@ -1,4 +1,4 @@
-# fastparallel
+# fastparallel [![Build Status](https://travis-ci.org/mcollina/fastparallel.svg?branch=master)](https://travis-ci.org/mcollina/fastparallel)
 
 Zero-overhead parallel function call for node.js. Also supports each
 and map!
