@@ -1,6 +1,6 @@
 {
   "name": "fastparallel",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Zero-overhead asynchronous parallel/each/map function call",
   "main": "parallel.js",
   "scripts": {
