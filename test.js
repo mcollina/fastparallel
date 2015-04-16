@@ -165,3 +165,37 @@ test('each support', function (t) {
     t.pass()
   }
 })
+
+test('call the callback with the given this', function (t) {
+  t.plan(1)
+
+  var instance = parallel()
+  var obj = {}
+
+  instance(obj, [build(), build()], 42, function done () {
+    t.equal(obj, this, 'this matches')
+  })
+
+  function build () {
+    return function something (arg, cb) {
+      setImmediate(cb)
+    }
+  }
+})
+
+test('call the callback with the given this with no results', function (t) {
+  t.plan(1)
+
+  var instance = parallel({ results: false })
+  var obj = {}
+
+  instance(obj, [build(), build()], 42, function done () {
+    t.equal(obj, this, 'this matches')
+  })
+
+  function build () {
+    return function something (arg, cb) {
+      setImmediate(cb)
+    }
+  }
+})
