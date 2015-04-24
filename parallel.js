@@ -72,17 +72,17 @@ function ResultsHolder (_release) {
   this._callThat = null
 
   var that = this
+  var i = 0
   this.release = function (err, result) {
-    that._count--
-
     that._err = err
-    that._results.push(result)
-    if (that._count === 0) {
+    that._results[i] = result
+    if (++i === that._count) {
       that._callback.call(that._callThat, that._err, that._results)
       that._callback = nop
       that._results = []
       that._err = null
       that._callThat = null
+      i = 0
       _release(that)
     }
   }

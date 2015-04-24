@@ -77,13 +77,17 @@ function somethingA (cb) {
   setImmediate(cb)
 }
 
-async.eachSeries([
-  benchFastParallel,
-  benchFastParallelNoResults,
-  benchAsyncParallel,
-  benchSetImmediate,
-  benchFastParallelEach,
-  benchFastParallelEachResults,
-  benchAsyncEach,
-  benchAsyncMap
-], bench)
+function runBench (done) {
+  async.eachSeries([
+    benchSetImmediate,
+    benchAsyncParallel,
+    benchAsyncEach,
+    benchAsyncMap,
+    benchFastParallel,
+    benchFastParallelNoResults,
+    benchFastParallelEachResults,
+    benchFastParallelEach
+  ], bench, done)
+}
+
+runBench(runBench)
