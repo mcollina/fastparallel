@@ -4,14 +4,16 @@ var defaults = {
   results: true
 }
 
-function parallel (options) {
+function fastparallel (options) {
   options = xtend(defaults, options)
 
   var released = options.released
   var Holder = options.results ? ResultsHolder : NoResultsHolder
   var last = new Holder(release)
 
-  function instance (that, toCall, arg, done) {
+  return parallel
+
+  function parallel (that, toCall, arg, done) {
     var holder = last || new Holder(release)
     var i
 
@@ -42,8 +44,6 @@ function parallel (options) {
     last = holder
     released()
   }
-
-  return instance
 }
 
 function NoResultsHolder (_release) {
@@ -90,4 +90,4 @@ function ResultsHolder (_release) {
 
 function nop () { }
 
-module.exports = parallel
+module.exports = fastparallel
