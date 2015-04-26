@@ -14,10 +14,11 @@ function fastparallel (options) {
   return parallel
 
   function parallel (that, toCall, arg, done) {
-    var holder = last || new Holder(release)
+    var holder = last
     var i
 
-    last = null
+    last = holder.next || new Holder(release)
+    holder.next = null
 
     if (toCall.length === 0) {
       done.call(that)
@@ -41,7 +42,7 @@ function fastparallel (options) {
   }
 
   function release (holder) {
-    last = holder
+    last.next = holder
     released()
   }
 }
@@ -50,6 +51,7 @@ function NoResultsHolder (_release) {
   this._count = -1
   this._callback = nop
   this._callThat = null
+  this.next = null
 
   var that = this
   this.release = function () {
@@ -70,6 +72,7 @@ function ResultsHolder (_release) {
   this._results = []
   this._err = null
   this._callThat = null
+  this.next = null
 
   var that = this
   var i = 0
