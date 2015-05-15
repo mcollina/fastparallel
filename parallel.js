@@ -9,24 +9,35 @@ function fastparallel (options) {
 
   var released = options.released
   var Holder = options.results ? ResultsHolder : NoResultsHolder
-  var last = new Holder(release)
+  var head = new Holder(release)
+  var tail = head
 
   return parallel
 
-  function parallel (that, toCall, arg, done) {
-    var holder = last
-    var i
+  function next () {
+    var holder = head
 
-    last = holder.next || new Holder(release)
+    if (holder.next) {
+      head = holder.next
+    } else {
+      head = new Holder(release)
+      tail = head
+    }
+
     holder.next = null
 
+    return holder
+  }
+
+  function parallel (that, toCall, arg, done) {
+    var i
+    var holder = next()
     if (toCall.length === 0) {
       done.call(that)
-      released(last)
+      released(head)
     } else {
       holder._callback = done
       holder._callThat = that
-
       if (typeof toCall === 'function') {
         holder._count = arg.length
         for (i = 0; i < arg.length; i++) {
@@ -42,7 +53,8 @@ function fastparallel (options) {
   }
 
   function release (holder) {
-    last.next = holder
+    tail.next = holder
+    tail = holder
     released()
   }
 }
