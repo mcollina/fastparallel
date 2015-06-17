@@ -210,3 +210,33 @@ test('call the callback with the given this with no data', function (t) {
     t.equal(obj, this, 'this matches')
   })
 })
+
+test('call the result callback when the each array is empty', function (t) {
+  t.plan(1)
+
+  var instance = parallel()
+  var obj = {}
+
+  instance(obj, something, [], function done () {
+    t.pass('the result function has been called')
+  })
+
+  function something (arg, cb) {
+    t.error('this should never be called')
+  }
+})
+
+test('call the result callback when the each array is empty with no results', function (t) {
+  t.plan(1)
+
+  var instance = parallel({ results: false })
+  var obj = {}
+
+  instance(obj, something, [], function done () {
+    t.pass('the result function has been called')
+  })
+
+  function something (arg, cb) {
+    t.error('this should never be called')
+  }
+})

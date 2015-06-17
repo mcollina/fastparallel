@@ -49,6 +49,10 @@ function fastparallel (options) {
           toCall[i].call(that, arg, holder.release)
         }
       }
+
+      if (holder._count === 0) {
+        holder.release()
+      }
     }
   }
 
@@ -69,7 +73,7 @@ function NoResultsHolder (_release) {
   this.release = function () {
     that._count--
 
-    if (that._count === 0) {
+    if (that._count <= 0) { // handles an empty list
       that._callback.call(that._callThat)
       that._callback = nop
       that._callThat = null
@@ -91,7 +95,7 @@ function ResultsHolder (_release) {
   this.release = function (err, result) {
     that._err = err
     that._results[i] = result
-    if (++i === that._count) {
+    if (++i >= that._count) { // handles an empty list
       that._callback.call(that._callThat, that._err, that._results)
       that._callback = nop
       that._results = []
