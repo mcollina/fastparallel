@@ -99,6 +99,16 @@ be called only once, even if more than one error happen.
 This library works by caching the latest used function, so that running a new parallel
 does not cause **any memory allocations**.
 
+## Why it is so fast?
+
+1. This library is caching funcitons a lot.
+
+2. V8 optimizations: thanks to caching, the functions can be optimized by V8 (if they are optimizable, and I took great care of making them so).
+
+3. Don't use arrays if you just need a queue. A linked list implemented via processes is much faster if you don't need to access elements in between.
+
+4. Accept passing a this for the functions. Thanks to this hack, you can extract your functions, and place them in a outer level where they are not created at every execution.
+
 ## License
 
 ISC
