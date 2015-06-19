@@ -9,7 +9,7 @@ Benchmark for doing 3 calls `setImmediate` 1 million times:
 * `async.parallel`: 5739ms
 * `async.each`: 3015ms
 * `async.map`: 4981ms
-* `parallelize`: 4846ms
+* `parallelize`: 3125ms
 * `fastparallel` with results: 2391ms
 * `fastparallel` without results: 2350ms
 * `fastparallel` map: 2351ms
