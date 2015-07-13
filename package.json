@@ -28,6 +28,7 @@
   "homepage": "https://github.com/mcollina/fastparallel",
   "devDependencies": {
     "async": "^0.9.0",
+    "fastbench": "^1.0.0",
     "faucet": "0.0.1",
     "parallelize": "^2.2.0",
     "pre-commit": "^1.0.6",

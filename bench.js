@@ -1,28 +1,10 @@
 var max = 1000000
 var parallel = require('./')()
 var parallelNoResults = require('./')({ results: false })
+var bench = require('fastbench')
 var async = require('async')
 var parallelize = require('parallelize')
 var obj = {}
-
-function bench (func, done) {
-  var key = max + '*' + func.name
-  var count = -1
-
-  console.time(key)
-  end()
-
-  function end () {
-    if (++count < max) {
-      func(end)
-    } else {
-      console.timeEnd(key)
-      if (done) {
-        done()
-      }
-    }
-  }
-}
 
 function benchFastParallel (done) {
   parallel(obj, [somethingP, somethingP, somethingP], 42, done)
@@ -86,18 +68,16 @@ function somethingA (cb) {
   setImmediate(cb)
 }
 
-function runBench (done) {
-  async.eachSeries([
-    benchSetImmediate,
-    benchAsyncParallel,
-    benchAsyncEach,
-    benchAsyncMap,
-    benchParallelize,
-    benchFastParallel,
-    benchFastParallelNoResults,
-    benchFastParallelEachResults,
-    benchFastParallelEach
-  ], bench, done)
-}
+var run = bench([
+  benchSetImmediate,
+  benchAsyncParallel,
+  benchAsyncEach,
+  benchAsyncMap,
+  benchParallelize,
+  benchFastParallel,
+  benchFastParallelNoResults,
+  benchFastParallelEachResults,
+  benchFastParallelEach
+], max)
 
-runBench(runBench)
+run(run)
