@@ -32,6 +32,7 @@ function fastparallel (options) {
   function parallel (that, toCall, arg, done) {
     var i
     var holder = next()
+    done = done || nop
     if (toCall.length === 0) {
       done.call(that)
       released(head)

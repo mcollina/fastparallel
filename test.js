@@ -240,3 +240,22 @@ test('call the result callback when the each array is empty with no results', fu
     t.error('this should never be called')
   }
 })
+
+test('does not require a done callback', function (t) {
+  t.plan(4)
+
+  var instance = parallel()
+  var count = 0
+  var obj = {}
+
+  instance(obj, [something, something], 42)
+
+  function something (arg, cb) {
+    t.equal(obj, this)
+    t.equal(arg, 42)
+    setImmediate(function () {
+      count++
+      cb()
+    })
+  }
+})
