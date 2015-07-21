@@ -67,7 +67,40 @@ test('fowards errs', function (t) {
   var obj = {}
 
   instance(obj, [somethingErr, something], 42, function done (err, results) {
-    t.error(err)
+    t.ok(err)
+    t.equal(count, 2, 'all functions must have completed')
+  })
+
+  function something (arg, cb) {
+    setImmediate(function () {
+      count++
+      cb(null, count)
+    })
+  }
+
+  function somethingErr (arg, cb) {
+    setImmediate(function () {
+      count++
+      cb(new Error('this is an err!'))
+    })
+  }
+
+  function released () {
+    t.pass()
+  }
+})
+
+test('fowards errs (bis)', function (t) {
+  t.plan(3)
+
+  var instance = parallel({
+    released: released
+  })
+  var count = 0
+  var obj = {}
+
+  instance(obj, [something, somethingErr], 42, function done (err, results) {
+    t.ok(err)
     t.equal(count, 2, 'all functions must have completed')
   })
 

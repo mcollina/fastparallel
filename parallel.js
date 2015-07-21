@@ -94,7 +94,7 @@ function ResultsHolder (_release) {
   var that = this
   var i = 0
   this.release = function (err, result) {
-    that._err = err
+    that._err = that._err || err
     that._results[i] = result
     if (++i >= that._count) { // handles an empty list
       that._callback.call(that._callThat, that._err, that._results)
