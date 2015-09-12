@@ -24,7 +24,7 @@ test('basically works', function (t) {
   }
 
   function released () {
-    t.pass()
+    t.pass('release')
   }
 })
 

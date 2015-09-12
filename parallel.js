@@ -1,4 +1,7 @@
+'use strict'
+
 var xtend = require('xtend')
+var reusify = require('reusify')
 var defaults = {
   released: nop,
   results: true
@@ -8,37 +11,21 @@ function fastparallel (options) {
   options = xtend(defaults, options)
 
   var released = options.released
-  var Holder = options.results ? ResultsHolder : NoResultsHolder
-  var head = new Holder(release)
-  var tail = head
+  var queue = reusify(options.results ? ResultsHolder : NoResultsHolder)
 
   return parallel
 
-  function next () {
-    var holder = head
-
-    if (holder.next) {
-      head = holder.next
-    } else {
-      head = new Holder(release)
-      tail = head
-    }
-
-    holder.next = null
-
-    return holder
-  }
-
   function parallel (that, toCall, arg, done) {
     var i
-    var holder = next()
+    var holder = queue.get()
     done = done || nop
     if (toCall.length === 0) {
       done.call(that)
-      released(head)
+      released(holder)
     } else {
       holder._callback = done
       holder._callThat = that
+      holder._release = release
       if (typeof toCall === 'function') {
         holder._count = arg.length
         for (i = 0; i < arg.length; i++) {
@@ -58,16 +45,16 @@ function fastparallel (options) {
   }
 
   function release (holder) {
-    tail.next = holder
-    tail = holder
-    released()
+    queue.release(holder)
+    released(holder)
   }
 }
 
-function NoResultsHolder (_release) {
+function NoResultsHolder () {
   this._count = -1
   this._callback = nop
   this._callThat = null
+  this._release = null
   this.next = null
 
   var that = this
@@ -78,7 +65,7 @@ function NoResultsHolder (_release) {
       that._callback.call(that._callThat)
       that._callback = nop
       that._callThat = null
-      _release(that)
+      that._release(that)
     }
   }
 }
@@ -89,6 +76,7 @@ function ResultsHolder (_release) {
   this._results = []
   this._err = null
   this._callThat = null
+  this._release = null
   this.next = null
 
   var that = this
@@ -103,7 +91,7 @@ function ResultsHolder (_release) {
       that._err = null
       that._callThat = null
       i = 0
-      _release(that)
+      that._release(that)
     }
   }
 }
