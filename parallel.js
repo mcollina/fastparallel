@@ -58,10 +58,9 @@ function NoResultsHolder () {
   this.next = null
 
   var that = this
+  var i = 0
   this.release = function () {
-    that._count--
-
-    if (that._count <= 0) { // handles an empty list
+    if (++i >= that._count) { // handles an empty list
       that._callback.call(that._callThat)
       that._callback = nop
       that._callThat = null

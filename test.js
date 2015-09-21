@@ -292,3 +292,29 @@ test('does not require a done callback', function (t) {
     })
   }
 })
+
+test('works with sync functions with no results', function (t) {
+  t.plan(6)
+
+  var instance = parallel({
+    results: false,
+    released: released
+  })
+  var count = 0
+  var obj = {}
+
+  instance(obj, [something, something], 42, function done () {
+    t.equal(2, count, 'all functions must have completed')
+  })
+
+  function something (arg, cb) {
+    t.equal(this, obj)
+    t.equal(42, arg)
+    count++
+    cb()
+  }
+
+  function released () {
+    t.pass('release')
+  }
+})
