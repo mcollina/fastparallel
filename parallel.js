@@ -60,11 +60,12 @@ function NoResultsHolder () {
   var that = this
   var i = 0
   this.release = function () {
-    if (++i >= that._count) { // handles an empty list
+    if (++i === that._count || that._count === 0) {
       that._callback.call(that._callThat)
       that._callback = nop
       that._callThat = null
       that._release(that)
+      i = 0
     }
   }
 }
@@ -83,7 +84,7 @@ function ResultsHolder (_release) {
   this.release = function (err, result) {
     that._err = that._err || err
     that._results[i] = result
-    if (++i >= that._count) { // handles an empty list
+    if (++i === that._count || that._count === 0) {
       that._callback.call(that._callThat, that._err, that._results)
       that._callback = nop
       that._results = []
