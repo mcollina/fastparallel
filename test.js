@@ -318,3 +318,32 @@ test('works with sync functions with no results', function (t) {
     t.pass('release')
   }
 })
+
+test('accumulates results in order', function (t) {
+  t.plan(8)
+
+  var instance = parallel({
+    released: released
+  })
+  var count = 2
+  var obj = {}
+
+  instance(obj, [something, something], 42, function done (err, results) {
+    t.notOk(err, 'no error')
+    t.equal(count, 0, 'all functions must have completed')
+    t.deepEqual(results, [2, 1])
+  })
+
+  function something (arg, cb) {
+    t.equal(obj, this)
+    t.equal(arg, 42)
+    var value = count--
+    setTimeout(function () {
+      cb(null, value)
+    }, 10 * value)
+  }
+
+  function released () {
+    t.pass()
+  }
+})
