@@ -5,17 +5,17 @@ and map!
 
 Benchmark for doing 3 calls `setImmediate` 1 million times:
 
-* non-reusable `setImmediate`: 2172ms
-* `async.parallel`: 5739ms
-* `async.each`: 3015ms
-* `async.map`: 4981ms
-* `parallelize`: 3125ms
-* `fastparallel` with results: 2391ms
-* `fastparallel` without results: 2350ms
-* `fastparallel` map: 2351ms
-* `fastparallel` each: 2359ms
+* non-reusable `setImmediate`: 2453ms
+* `async.parallel`: 4269ms
+* `async.each`: 3286ms
+* `async.map`: 3822ms
+* `parallelize`: 3057ms
+* `fastparallel` with results: 2883ms
+* `fastparallel` without results: 2620ms
+* `fastparallel` map: 2839ms
+* `fastparallel` each: 2604ms
 
-These benchmarks where taken via `bench.js` on iojs 2.2.1, on a MacBook
+These benchmarks where taken via `bench.js` on node v4.0.0, on a MacBook
 Pro Retina 2014.
 
 If you need zero-overhead series function call, check out
@@ -24,6 +24,9 @@ check out [fastq](http://npm.im/fastq). If you need to run fast
 waterfall calls, use [fastfall](http://npm.im/fastfall).
 
 [![js-standard-style](https://raw.githubusercontent.com/feross/standard/master/badge.png)](https://github.com/feross/standard)
+
+__The major difference between version 1.x.x and 2.x.x is the order of
+results__, this is now ready to replace async in every case.
 
 ## Example for parallel call
 
@@ -93,8 +96,7 @@ function completed () {
 
 ## Caveats
 
-The `results` array will be non-ordered, and the `done` function will
-be called only once, even if more than one error happen.
+The `done` function will be called only once, even if more than one error happen.
 
 This library works by caching the latest used function, so that running a new parallel
 does not cause **any memory allocations**.
