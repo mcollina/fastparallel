@@ -3,6 +3,8 @@ var parallel = require('./')()
 var parallelNoResults = require('./')({ results: false })
 var bench = require('fastbench')
 var async = require('async')
+var insync = require('insync')
+var items = require('items')
 var parallelize = require('parallelize')
 var obj = {}
 
@@ -26,6 +28,14 @@ function benchAsyncParallel (done) {
   async.parallel([somethingA, somethingA, somethingA], done)
 }
 
+function benchInsyncParallel (done) {
+  insync.parallel([somethingA, somethingA, somethingA], done)
+}
+
+function benchItemsParallel (done) {
+  items.parallel.execute([somethingA, somethingA, somethingA], done)
+}
+
 function benchParallelize (done) {
   var next = parallelize(done)
 
@@ -40,6 +50,18 @@ function benchAsyncEach (done) {
 
 function benchAsyncMap (done) {
   async.map([1, 2, 3], somethingP, done)
+}
+
+function benchInsyncEach (done) {
+  insync.each([1, 2, 3], somethingP, done)
+}
+
+function benchInsyncMap (done) {
+  insync.map([1, 2, 3], somethingP, done)
+}
+
+function benchItemsSerial (done) {
+  items.serial([1, 2, 3], somethingP, done)
 }
 
 var nextDone
@@ -73,6 +95,11 @@ var run = bench([
   benchAsyncParallel,
   benchAsyncEach,
   benchAsyncMap,
+  benchInsyncParallel,
+  benchInsyncEach,
+  benchInsyncMap,
+  benchItemsParallel,
+  benchItemsSerial,
   benchParallelize,
   benchFastParallel,
   benchFastParallelNoResults,
