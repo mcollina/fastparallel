@@ -103,7 +103,7 @@ does not cause **any memory allocations**.
 
 ## Why it is so fast?
 
-1. This library is caching funcitons a lot.
+1. This library is caching functions a lot.
 
 2. V8 optimizations: thanks to caching, the functions can be optimized by V8 (if they are optimizable, and I took great care of making them so).
 
