@@ -5,18 +5,23 @@ and map!
 
 Benchmark for doing 3 calls `setImmediate` 1 million times:
 
-* non-reusable `setImmediate`: 2453ms
-* `async.parallel`: 4269ms
-* `async.each`: 3286ms
-* `async.map`: 3822ms
-* `parallelize`: 3057ms
-* `fastparallel` with results: 2883ms
-* `fastparallel` without results: 2620ms
-* `fastparallel` map: 2839ms
-* `fastparallel` each: 2604ms
+* non-reusable `setImmediate`: 2085ms
+* `async.parallel`: 3784ms
+* `async.each`: 2959ms
+* `async.map`: 3656ms
+* `insync.parallel`: 12006ms
+* `insync.each`: 2698ms
+* `insync.map`: 11402ms
+* `items.parallel`: 4457ms
+* `items.serial`: 5130ms
+* `parallelize`: 6815ms
+* `fastparallel` with results: 2463ms
+* `fastparallel` without results: 2229ms
+* `fastparallel` map: 2456ms
+* `fastparallel` each: 2211ms
 
-These benchmarks where taken via `bench.js` on node v4.0.0, on a MacBook
-Pro Retina 2014.
+These benchmarks where taken via `bench.js` on node v4.1.0, on a MacBook
+Pro Retina Mid 2015.
 
 If you need zero-overhead series function call, check out
 [fastseries](http://npm.im/fastseries). If you need a fast work queue
