@@ -30,6 +30,8 @@
     "async": "^1.4.2",
     "fastbench": "^1.0.0",
     "faucet": "0.0.1",
+    "insync": "^2.1.0",
+    "items": "^1.1.1",
     "parallelize": "^2.2.0",
     "pre-commit": "^1.0.6",
     "standard": "^4.2.0",
