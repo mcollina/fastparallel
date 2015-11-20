@@ -347,3 +347,45 @@ test('accumulates results in order', function (t) {
     t.pass()
   }
 })
+
+test('call without arg if there is no arg with no results', function (t) {
+  t.plan(3)
+
+  var instance = parallel({
+    results: false
+  })
+  var count = 0
+  var obj = {}
+
+  instance(obj, [something, something], 42, function done () {
+    t.equal(count, 2, 'all functions must have completed')
+  })
+
+  function something (cb) {
+    t.equal(obj, this)
+    setImmediate(function () {
+      count++
+      cb()
+    })
+  }
+})
+
+test('call without arg if there is no arg with results', function (t) {
+  t.plan(3)
+
+  var instance = parallel()
+  var count = 0
+  var obj = {}
+
+  instance(obj, [something, something], 42, function done () {
+    t.equal(count, 2, 'all functions must have completed')
+  })
+
+  function something (cb) {
+    t.equal(obj, this)
+    setImmediate(function () {
+      count++
+      cb()
+    })
+  }
+})
