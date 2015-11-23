@@ -5,23 +5,26 @@ and map!
 
 Benchmark for doing 3 calls `setImmediate` 1 million times:
 
-* non-reusable `setImmediate`: 2085ms
-* `async.parallel`: 3784ms
-* `async.each`: 2959ms
-* `async.map`: 3656ms
-* `insync.parallel`: 12006ms
-* `insync.each`: 2698ms
-* `insync.map`: 11402ms
-* `items.parallel`: 4457ms
-* `items.serial`: 5130ms
+* non-reusable `setImmediate`: 1989ms
+* `async.parallel`: 4062ms
+* `async.each`: 2911ms
+* `async.map`: 3491ms
+* `neoAsync.parallel`: 2459ms
+* `neoAsync.each`: 2330ms
+* `neoAsync.map`: 2418ms
+* `insync.parallel`: 11719ms
+* `insync.each`: 2647ms
+* `insync.map`: 10932ms
+* `items.parallel`: 4011ms
+* `items.serial`: 4750ms
 * `parallelize`: 6815ms
 * `fastparallel` with results: 2463ms
-* `fastparallel` without results: 2229ms
-* `fastparallel` map: 2456ms
-* `fastparallel` each: 2211ms
+* `fastparallel` without results: 2214ms
+* `fastparallel` map: 2403ms
+* `fastparallel` each: 2170ms
 
-These benchmarks where taken via `bench.js` on node v4.1.0, on a MacBook
-Pro Retina Mid 2015.
+These benchmarks where taken via `bench.js` on node v4.2.2, on a MacBook
+Pro Retina Mid 2014 (i7, 16GB of RAM).
 
 If you need zero-overhead series function call, check out
 [fastseries](http://npm.im/fastseries). If you need a fast work queue
