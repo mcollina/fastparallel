@@ -72,10 +72,6 @@ function benchInsyncMap (done) {
   insync.map([1, 2, 3], somethingP, done)
 }
 
-function benchItemsSerial (done) {
-  items.serial([1, 2, 3], somethingP, done)
-}
-
 var nextDone
 var nextCount
 
@@ -114,7 +110,6 @@ var run = bench([
   benchInsyncEach,
   benchInsyncMap,
   benchItemsParallel,
-  benchItemsSerial,
   benchParallelize,
   benchFastParallel,
   benchFastParallelNoResults,

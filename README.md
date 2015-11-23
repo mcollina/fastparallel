@@ -5,23 +5,22 @@ and map!
 
 Benchmark for doing 3 calls `setImmediate` 1 million times:
 
-* non-reusable `setImmediate`: 1989ms
-* `async.parallel`: 4062ms
-* `async.each`: 2911ms
-* `async.map`: 3491ms
-* `neoAsync.parallel`: 2459ms
-* `neoAsync.each`: 2330ms
-* `neoAsync.map`: 2418ms
-* `insync.parallel`: 11719ms
-* `insync.each`: 2647ms
-* `insync.map`: 10932ms
-* `items.parallel`: 4011ms
-* `items.serial`: 4750ms
-* `parallelize`: 6815ms
-* `fastparallel` with results: 2463ms
-* `fastparallel` without results: 2214ms
-* `fastparallel` map: 2403ms
-* `fastparallel` each: 2170ms
+* non-reusable `setImmediate`: 1781ms
+* `async.parallel`: 3484ms
+* `async.each`: 2621ms
+* `async.map`: 3054ms
+* `neoAsync.parallel`: 2162ms
+* `neoAsync.each`: 2156ms
+* `neoAsync.map`: 2080ms
+* `insync.parallel`: 10252ms
+* `insync.each`: 2397ms
+* `insync.map`: 9700ms
+* `items.parallel`: 3725ms
+* `parallelize`: 2928ms
+* `fastparallel` with results: 2139ms
+* `fastparallel` without results: 1957ms
+* `fastparallel` map: 21022102ms
+* `fastparallel` each: 1941ms
 
 These benchmarks where taken via `bench.js` on node v4.2.2, on a MacBook
 Pro Retina Mid 2014 (i7, 16GB of RAM).
