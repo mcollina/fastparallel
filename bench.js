@@ -7,22 +7,21 @@ var neo = require('neo-async')
 var insync = require('insync')
 var items = require('items')
 var parallelize = require('parallelize')
-var obj = {}
 
 function benchFastParallel (done) {
-  parallel(obj, [somethingP, somethingP, somethingP], 42, done)
+  parallel(null, [somethingP, somethingP, somethingP], 42, done)
 }
 
 function benchFastParallelNoResults (done) {
-  parallelNoResults(obj, [somethingP, somethingP, somethingP], 42, done)
+  parallelNoResults(null, [somethingP, somethingP, somethingP], 42, done)
 }
 
 function benchFastParallelEach (done) {
-  parallelNoResults(obj, somethingP, [1, 2, 3], done)
+  parallelNoResults(null, somethingP, [1, 2, 3], done)
 }
 
 function benchFastParallelEachResults (done) {
-  parallel(obj, somethingP, [1, 2, 3], done)
+  parallel(null, somethingP, [1, 2, 3], done)
 }
 
 function benchAsyncParallel (done) {

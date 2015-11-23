@@ -113,8 +113,13 @@ function NoResultsHolder () {
   var that = this
   var i = 0
   this.release = function () {
+    var cb = that._callback
     if (++i === that._count || that._count === 0) {
-      that._callback.call(that._callThat)
+      if (that._callThat) {
+        cb.call(that._callThat)
+      } else {
+        cb()
+      }
       that._callback = nop
       that._callThat = null
       that._release(that)
@@ -152,9 +157,14 @@ function ResultsHolder () {
   this.release = function (err, pos, result) {
     that._err = that._err || err
     that._results[pos] = result
+    var cb = that._callback
 
     if (++i === that._count || that._count === 0) {
-      that._callback.call(that._callThat, that._err, that._results)
+      if (that._callThat) {
+        cb.call(that._callThat, that._err, that._results)
+      } else {
+        cb(that._err, that._results)
+      }
       that._callback = nop
       that._results = null
       that._err = null
