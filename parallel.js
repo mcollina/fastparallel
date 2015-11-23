@@ -68,28 +68,22 @@ function fastparallel (options) {
   }
 
   function goResultsArray (that, funcs, arg, holder) {
-    var singleCaller = null
-    var toCall = nop
+    var sc = null
+    var tc = nop
     holder._count = funcs.length
     holder._results = new Array(holder._count)
     for (var i = 0; i < funcs.length; i++) {
-      singleCaller = queueSingleCaller.get()
-      singleCaller._release = singleCallerRelease
-      singleCaller.parent = holder
-      singleCaller.pos = i
-      toCall = funcs[i]
+      sc = queueSingleCaller.get()
+      sc._release = singleCallerRelease
+      sc.parent = holder
+      sc.pos = i
+      tc = funcs[i]
       if (that) {
-        if (toCall.length === 1) {
-          toCall.call(that, singleCaller.release)
-        } else {
-          toCall.call(that, arg, singleCaller.release)
-        }
+        if (tc.length === 1) tc.call(that, sc.release)
+        else tc.call(that, arg, sc.release)
       } else {
-        if (toCall.length === 1) {
-          toCall(singleCaller.release)
-        } else {
-          toCall(arg, singleCaller.release)
-        }
+        if (tc.length === 1) tc(sc.release)
+        else tc(arg, sc.release)
       }
     }
   }
