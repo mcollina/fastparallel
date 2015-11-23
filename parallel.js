@@ -59,7 +59,11 @@ function fastparallel (options) {
       singleCaller._release = singleCallerRelease
       singleCaller.parent = holder
       singleCaller.pos = i
-      toCall.call(that, arg[i], singleCaller.release)
+      if (that) {
+        toCall.call(that, arg[i], singleCaller.release)
+      } else {
+        toCall(arg[i], singleCaller.release)
+      }
     }
   }
 
@@ -74,10 +78,18 @@ function fastparallel (options) {
       singleCaller.parent = holder
       singleCaller.pos = i
       toCall = funcs[i]
-      if (toCall.length === 1) {
-        toCall.call(that, singleCaller.release)
+      if (that) {
+        if (toCall.length === 1) {
+          toCall.call(that, singleCaller.release)
+        } else {
+          toCall.call(that, arg, singleCaller.release)
+        }
       } else {
-        toCall.call(that, arg, singleCaller.release)
+        if (toCall.length === 1) {
+          toCall(singleCaller.release)
+        } else {
+          toCall(arg, singleCaller.release)
+        }
       }
     }
   }
@@ -85,7 +97,11 @@ function fastparallel (options) {
   function goNoResultsFunc (that, toCall, arg, holder) {
     holder._count = arg.length
     for (var i = 0; i < arg.length; i++) {
-      toCall.call(that, arg[i], holder.release)
+      if (that) {
+        toCall.call(that, arg[i], holder.release)
+      } else {
+        toCall(arg[i], holder.release)
+      }
     }
   }
 
@@ -94,10 +110,18 @@ function fastparallel (options) {
     holder._count = funcs.length
     for (var i = 0; i < funcs.length; i++) {
       toCall = funcs[i]
-      if (toCall.length === 1) {
-        toCall.call(that, holder.release)
+      if (that) {
+        if (toCall.length === 1) {
+          toCall.call(that, holder.release)
+        } else {
+          toCall.call(that, arg, holder.release)
+        }
       } else {
-        toCall.call(that, arg, holder.release)
+        if (toCall.length === 1) {
+          toCall(holder.release)
+        } else {
+          toCall(arg, holder.release)
+        }
       }
     }
   }
