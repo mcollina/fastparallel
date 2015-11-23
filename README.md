@@ -19,7 +19,7 @@ Benchmark for doing 3 calls `setImmediate` 1 million times:
 * `parallelize`: 2928ms
 * `fastparallel` with results: 2139ms
 * `fastparallel` without results: 1957ms
-* `fastparallel` map: 21022102ms
+* `fastparallel` map: 2102ms
 * `fastparallel` each: 1941ms
 
 These benchmarks where taken via `bench.js` on node v4.2.2, on a MacBook
