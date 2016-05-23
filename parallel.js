@@ -174,9 +174,10 @@ function ResultsHolder () {
   var i = 0
   this.release = function (err, pos, result) {
     that._err = that._err || err
-    that._results[pos] = result
+    if (pos >= 0) {
+      that._results[pos] = result
+    }
     var cb = that._callback
-
     if (++i === that._count || that._count === 0) {
       if (that._callThat) {
         cb.call(that._callThat, that._err, that._results)

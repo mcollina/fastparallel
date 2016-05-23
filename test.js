@@ -389,3 +389,37 @@ test('call without arg if there is no arg with results', function (t) {
     })
   }
 })
+
+test('each support with nothing to process', function (t) {
+  t.plan(2)
+
+  var instance = parallel()
+  var obj = {}
+  var args = []
+
+  instance(obj, something, args, function done (err, results) {
+    console.log(results)
+    t.error(err)
+    t.deepEqual(results, [], 'empty results')
+  })
+
+  function something (arg, cb) {
+    t.fail('this should never happen')
+  }
+})
+
+test('each without results support with nothing to process', function (t) {
+  t.plan(1)
+
+  var instance = parallel({ results: false })
+  var obj = {}
+  var args = []
+
+  instance(obj, something, args, function done () {
+    t.pass('done called')
+  })
+
+  function something (arg, cb) {
+    t.fail('this should never happen')
+  }
+})
