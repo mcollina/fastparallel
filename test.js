@@ -398,7 +398,6 @@ test('each support with nothing to process', function (t) {
   var args = []
 
   instance(obj, something, args, function done (err, results) {
-    console.log(results)
     t.error(err)
     t.deepEqual(results, [], 'empty results')
   })
