@@ -5,7 +5,8 @@
   "main": "parallel.js",
   "scripts": {
     "lint": "standard",
-    "test": "tape test.js | faucet"
+    "test": "tape test.js | faucet",
+    "coverage": "istanbul cover tape test.js; cat coverage/lcov.info | coveralls"
   },
   "pre-commit": [
     "lint",
@@ -28,9 +29,11 @@
   "homepage": "https://github.com/mcollina/fastparallel",
   "devDependencies": {
     "async": "^2.0.0-rc.5",
+    "coveralls": "^2.11.9",
     "fastbench": "^1.0.1",
     "faucet": "0.0.1",
     "insync": "^2.1.0",
+    "istanbul": "^0.4.3",
     "items": "^2.1.0",
     "neo-async": "^1.8.2",
     "parallelize": "^3.0.0",
