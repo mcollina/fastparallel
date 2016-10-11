@@ -422,3 +422,20 @@ test('each without results support with nothing to process', function (t) {
     t.fail('this should never happen')
   }
 })
+
+test('each works with arrays of objects', function (t) {
+  t.plan(3)
+
+  var instance = parallel({ results: false })
+  var obj = {}
+  var args = [{val: true}, {val: true}]
+
+  instance(obj, something, args, function () {
+    t.ok('done called')
+  })
+
+  function something (arg, cb) {
+    t.ok(arg.val)
+    cb()
+  }
+})
