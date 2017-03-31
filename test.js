@@ -439,3 +439,27 @@ test('each works with arrays of objects', function (t) {
     cb()
   }
 })
+
+test('should not break when SingleCaller parent is null', function (t) {
+  t.plan(2)
+
+  var instance = parallel({
+      results: true,
+      released: released
+  })
+  var obj = {}
+  var args = [[1,2]]
+  var res = 0;
+
+  instance(obj, something, args, released)
+
+  function something (nums, cb) {
+      nums.forEach(function(num, index) {
+          setImmediate(cb, null, num * 2)
+      })
+  }
+
+  function released () {
+      t.pass()
+  }
+})
