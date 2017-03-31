@@ -154,7 +154,8 @@ function SingleCaller () {
 
   var that = this
   this.release = function (err, result) {
-    that.parent.release(err, that.pos, result)
+    if (that.parent)
+        that.parent.release(err, that.pos, result)
     that.pos = -1
     that.parent = null
     that._release(that)
