@@ -424,7 +424,7 @@ test('each works with arrays of objects', function (t) {
 
   var instance = parallel({ results: false })
   var obj = {}
-  var args = [{val: true}, {val: true}]
+  var args = [{ val: true }, { val: true }]
 
   instance(obj, something, args, function () {
     t.ok('done called')
