@@ -5,7 +5,7 @@ test('basically works', function (t) {
   t.plan(6)
 
   var instance = parallel({
-    released: released
+    released
   })
   var count = 0
   var obj = {}
@@ -32,7 +32,7 @@ test('accumulates results', function (t) {
   t.plan(8)
 
   var instance = parallel({
-    released: released
+    released
   })
   var count = 0
   var obj = {}
@@ -61,7 +61,7 @@ test('fowards errs', function (t) {
   t.plan(3)
 
   var instance = parallel({
-    released: released
+    released
   })
   var count = 0
   var obj = {}
@@ -94,7 +94,7 @@ test('fowards errs (bis)', function (t) {
   t.plan(3)
 
   var instance = parallel({
-    released: released
+    released
   })
   var count = 0
   var obj = {}
@@ -127,7 +127,7 @@ test('does not forward errors or result with results:false flag', function (t) {
   t.plan(8)
 
   var instance = parallel({
-    released: released,
+    released,
     results: false
   })
   var count = 0
@@ -157,7 +157,7 @@ test('should call done and released if an empty is passed', function (t) {
   t.plan(2)
 
   var instance = parallel({
-    released: released
+    released
   })
   var obj = {}
 
@@ -174,7 +174,7 @@ test('each support', function (t) {
   t.plan(8)
 
   var instance = parallel({
-    released: released
+    released
   })
   var count = 0
   var obj = {}
@@ -294,7 +294,7 @@ test('works with sync functions with no results', function (t) {
 
   var instance = parallel({
     results: false,
-    released: released
+    released
   })
   var count = 0
   var obj = {}
@@ -319,7 +319,7 @@ test('accumulates results in order', function (t) {
   t.plan(8)
 
   var instance = parallel({
-    released: released
+    released
   })
   var count = 2
   var obj = {}
