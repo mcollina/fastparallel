@@ -5,25 +5,26 @@ and map!
 
 Benchmark for doing 3 calls `setImmediate` 1 million times:
 
-* non-reusable `setImmediate`: 1781ms
-* `async.parallel`: 3484ms
-* `async.each`: 2621ms
-* `async.map`: 3054ms
-* `neoAsync.parallel`: 2162ms
-* `neoAsync.each`: 2156ms
-* `neoAsync.map`: 2080ms
-* `insync.parallel`: 10252ms
-* `insync.each`: 2397ms
-* `insync.map`: 9700ms
-* `items.parallel`: 3725ms
-* `parallelize`: 2928ms
-* `fastparallel` with results: 2139ms
-* `fastparallel` without results: 1957ms
-* `fastparallel` map: 2102ms
-* `fastparallel` each: 1941ms
+```
+benchSetImmediate*1000000: 1378.514ms
+benchAsyncParallel*1000000: 1740.304ms
+benchAsyncEach*1000000: 1566.517ms
+benchAsyncMap*1000000: 1687.518ms
+benchNeoParallel*1000000: 1388.223ms
+benchNeoEach*1000000: 1473.006ms
+benchNeoMap*1000000: 1402.986ms
+benchInsyncParallel*1000000: 1957.863ms
+benchInsyncEach*1000000: 1383.822ms
+benchInsyncMap*1000000: 1822.954ms
+benchItemsParallel*1000000: 1690.118ms
+benchParallelize*1000000: 1570.064ms
+benchFastParallel*1000000: 1536.692ms
+benchFastParallelNoResults*1000000: 1363.145ms
+benchFastParallelEachResults*1000000: 1508.134ms
+benchFastParallelEach*1000000: 1325.314ms
+```
 
-These benchmarks where taken via `bench.js` on node v4.2.2, on a MacBook
-Pro Retina Mid 2014 (i7, 16GB of RAM).
+Obtained on node 12.18.2, on a dedicated server.
 
 If you need zero-overhead series function call, check out
 [fastseries](http://npm.im/fastseries). If you need a fast work queue
