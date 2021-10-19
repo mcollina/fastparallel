@@ -35,7 +35,7 @@
     "insync": "^2.1.1",
     "items": "^2.1.2",
     "neo-async": "^2.6.1",
-    "nyc": "^14.1.1",
+    "nyc": "^15.1.0",
     "parallelize": "^3.0.1",
     "pre-commit": "^1.2.2",
     "standard": "^16.0.4",
