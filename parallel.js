@@ -132,7 +132,7 @@ function NoResultsHolder () {
   var i = 0
   this.release = function () {
     var cb = that._callback
-    if (++i >= that._count || that._count === 0) {
+    if (++i === that._count || that._count === 0) {
       if (that._callThat) {
         cb.call(that._callThat)
       } else {
@@ -140,8 +140,8 @@ function NoResultsHolder () {
       }
       that._callback = nop
       that._callThat = null
-      that._release(that)
       i = 0
+      that._release(that)
     }
   }
 }
@@ -178,7 +178,7 @@ function ResultsHolder () {
       that._results[pos] = result
     }
     var cb = that._callback
-    if (++i >= that._count || that._count === 0) {
+    if (++i === that._count || that._count === 0) {
       if (that._callThat) {
         cb.call(that._callThat, that._err, that._results)
       } else {
