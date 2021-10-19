@@ -437,15 +437,15 @@ test('each works with arrays of objects', function (t) {
 })
 
 test('using same instance multiple times clears the state of result holder', function (t) {
-  const total = 10
+  var total = 10
   t.plan(total)
 
   var instance = parallel({
     results: false,
-    released
+    released: released
   })
   var obj = {}
-  let count = 0
+  var count = 0
 
   function released () {
     if (count < total) {
