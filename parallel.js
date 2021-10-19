@@ -140,8 +140,8 @@ function NoResultsHolder () {
       }
       that._callback = nop
       that._callThat = null
-      that._release(that)
       i = 0
+      that._release(that)
     }
   }
 }

@@ -435,3 +435,31 @@ test('each works with arrays of objects', function (t) {
     cb()
   }
 })
+
+test('using same instance multiple times clears the state of result holder', function (t) {
+  var total = 10
+  t.plan(total)
+
+  var instance = parallel({
+    results: false,
+    released: released
+  })
+  var obj = {}
+  var count = 0
+
+  function released () {
+    if (count < total) {
+      instance(obj, [something], 42, function done () {
+        t.ok(true, 'done is called')
+        count++
+      })
+    }
+  }
+
+  released()
+  function something (cb) {
+    setImmediate(function () {
+      cb()
+    })
+  }
+})
