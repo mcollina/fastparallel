@@ -1,6 +1,5 @@
 'use strict'
 
-const xtend = require('xtend')
 const reusify = require('reusify')
 const defaults = {
   released: nop,
@@ -8,7 +7,7 @@ const defaults = {
 }
 
 function fastparallel (options) {
-  options = xtend(defaults, options)
+  options = Object.assign({}, defaults, options)
 
   const released = options.released
   const queue = reusify(options.results ? ResultsHolder : NoResultsHolder)
