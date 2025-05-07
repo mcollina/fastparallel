@@ -5,7 +5,7 @@ and map!
 
 Benchmark for doing 3 calls `setImmediate` 1 million times:
 
-```
+```text
 benchSetImmediate*1000000: 1378.514ms
 benchAsyncParallel*1000000: 1740.304ms
 benchAsyncEach*1000000: 1566.517ms
