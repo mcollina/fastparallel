@@ -85,6 +85,22 @@ function benchSetImmediate (done) {
   setImmediate(somethingImmediate)
 }
 
+function benchPromiseAll (done) {
+  Promise.all([
+    somethingPromiseA,
+    somethingPromiseA,
+    somethingPromiseA
+  ]).then(done)
+}
+
+function benchPromiseAllEach (done) {
+  Promise.all([
+    somethingPromiseP,
+    somethingPromiseP,
+    somethingPromiseP
+  ]).then((arg) => done(arg))
+}
+
 function somethingImmediate () {
   nextCount--
   if (nextCount === 0) {
@@ -98,6 +114,16 @@ function somethingP (arg, cb) {
 
 function somethingA (cb) {
   setImmediate(cb)
+}
+
+function somethingPromiseP (arg) {
+  return new Promise((resolve) => {
+    setImmediate(resolve, arg)
+  })
+}
+
+function somethingPromiseA () {
+  return Promise.resolve(setImmediate)
 }
 
 const run = bench([
@@ -116,7 +142,9 @@ const run = bench([
   benchFastParallel,
   benchFastParallelNoResults,
   benchFastParallelEachResults,
-  benchFastParallelEach
+  benchFastParallelEach,
+  benchPromiseAll,
+  benchPromiseAllEach
 ], max)
 
 run(run)
