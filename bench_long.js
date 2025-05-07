@@ -1,13 +1,13 @@
-var max = 1000000
-var parallel = require('./')()
-var parallelNoResults = require('./')({ results: false })
-var bench = require('fastbench')
-var async = require('async')
-var neo = require('neo-async')
+const max = 1000000
+const parallel = require('./')()
+const parallelNoResults = require('./')({ results: false })
+const bench = require('fastbench')
+const async = require('async')
+const neo = require('neo-async')
 
-var funcs = []
+const funcs = []
 
-for (var i = 0; i < 25; i++) {
+for (let i = 0; i < 25; i++) {
   funcs.push(something)
 }
 
@@ -31,7 +31,7 @@ function something (cb) {
   setImmediate(cb)
 }
 
-var run = bench([
+const run = bench([
   benchAsyncParallel,
   benchNeoParallel,
   benchFastParallel,

@@ -1,14 +1,14 @@
-var test = require('tape')
-var parallel = require('./')
+const test = require('tape')
+const parallel = require('./')
 
 test('basically works', function (t) {
   t.plan(6)
 
-  var instance = parallel({
-    released: released
+  const instance = parallel({
+    released
   })
-  var count = 0
-  var obj = {}
+  let count = 0
+  const obj = {}
 
   instance(obj, [something, something], 42, function done () {
     t.equal(count, 2, 'all functions must have completed')
@@ -31,11 +31,11 @@ test('basically works', function (t) {
 test('accumulates results', function (t) {
   t.plan(8)
 
-  var instance = parallel({
-    released: released
+  const instance = parallel({
+    released
   })
-  var count = 0
-  var obj = {}
+  let count = 0
+  const obj = {}
 
   instance(obj, [something, something], 42, function done (err, results) {
     t.notOk(err, 'no error')
@@ -60,11 +60,11 @@ test('accumulates results', function (t) {
 test('fowards errs', function (t) {
   t.plan(3)
 
-  var instance = parallel({
-    released: released
+  const instance = parallel({
+    released
   })
-  var count = 0
-  var obj = {}
+  let count = 0
+  const obj = {}
 
   instance(obj, [somethingErr, something], 42, function done (err, results) {
     t.ok(err)
@@ -93,11 +93,11 @@ test('fowards errs', function (t) {
 test('fowards errs (bis)', function (t) {
   t.plan(3)
 
-  var instance = parallel({
-    released: released
+  const instance = parallel({
+    released
   })
-  var count = 0
-  var obj = {}
+  let count = 0
+  const obj = {}
 
   instance(obj, [something, somethingErr], 42, function done (err, results) {
     t.ok(err)
@@ -126,12 +126,12 @@ test('fowards errs (bis)', function (t) {
 test('does not forward errors or result with results:false flag', function (t) {
   t.plan(8)
 
-  var instance = parallel({
-    released: released,
+  const instance = parallel({
+    released,
     results: false
   })
-  var count = 0
-  var obj = {}
+  let count = 0
+  const obj = {}
 
   instance(obj, [something, something], 42, function done (err, results) {
     t.equal(err, undefined, 'no err')
@@ -156,10 +156,10 @@ test('does not forward errors or result with results:false flag', function (t) {
 test('should call done and released if an empty is passed', function (t) {
   t.plan(2)
 
-  var instance = parallel({
-    released: released
+  const instance = parallel({
+    released
   })
-  var obj = {}
+  const obj = {}
 
   instance(obj, [], 42, function done () {
     t.pass()
@@ -173,13 +173,13 @@ test('should call done and released if an empty is passed', function (t) {
 test('each support', function (t) {
   t.plan(8)
 
-  var instance = parallel({
-    released: released
+  const instance = parallel({
+    released
   })
-  var count = 0
-  var obj = {}
-  var args = [1, 2, 3]
-  var i = 0
+  let count = 0
+  const obj = {}
+  const args = [1, 2, 3]
+  let i = 0
 
   instance(obj, something, args, function done () {
     t.equal(count, 3, 'all functions must have completed')
@@ -202,8 +202,8 @@ test('each support', function (t) {
 test('call the callback with the given this', function (t) {
   t.plan(1)
 
-  var instance = parallel()
-  var obj = {}
+  const instance = parallel()
+  const obj = {}
 
   instance(obj, [build(), build()], 42, function done () {
     t.equal(obj, this, 'this matches')
@@ -219,8 +219,8 @@ test('call the callback with the given this', function (t) {
 test('call the callback with the given this with no results', function (t) {
   t.plan(1)
 
-  var instance = parallel({ results: false })
-  var obj = {}
+  const instance = parallel({ results: false })
+  const obj = {}
 
   instance(obj, [build(), build()], 42, function done () {
     t.equal(obj, this, 'this matches')
@@ -236,8 +236,8 @@ test('call the callback with the given this with no results', function (t) {
 test('call the callback with the given this with no data', function (t) {
   t.plan(1)
 
-  var instance = parallel()
-  var obj = {}
+  const instance = parallel()
+  const obj = {}
 
   instance(obj, [], 42, function done () {
     t.equal(obj, this, 'this matches')
@@ -247,8 +247,8 @@ test('call the callback with the given this with no data', function (t) {
 test('call the result callback when the each array is empty', function (t) {
   t.plan(1)
 
-  var instance = parallel()
-  var obj = {}
+  const instance = parallel()
+  const obj = {}
 
   instance(obj, something, [], function done () {
     t.pass('the result function has been called')
@@ -262,8 +262,8 @@ test('call the result callback when the each array is empty', function (t) {
 test('call the result callback when the each array is empty with no results', function (t) {
   t.plan(1)
 
-  var instance = parallel({ results: false })
-  var obj = {}
+  const instance = parallel({ results: false })
+  const obj = {}
 
   instance(obj, something, [], function done () {
     t.pass('the result function has been called')
@@ -277,8 +277,8 @@ test('call the result callback when the each array is empty with no results', fu
 test('does not require a done callback', function (t) {
   t.plan(4)
 
-  var instance = parallel()
-  var obj = {}
+  const instance = parallel()
+  const obj = {}
 
   instance(obj, [something, something], 42)
 
@@ -292,12 +292,12 @@ test('does not require a done callback', function (t) {
 test('works with sync functions with no results', function (t) {
   t.plan(6)
 
-  var instance = parallel({
+  const instance = parallel({
     results: false,
-    released: released
+    released
   })
-  var count = 0
-  var obj = {}
+  let count = 0
+  const obj = {}
 
   instance(obj, [something, something], 42, function done () {
     t.equal(2, count, 'all functions must have completed')
@@ -318,11 +318,11 @@ test('works with sync functions with no results', function (t) {
 test('accumulates results in order', function (t) {
   t.plan(8)
 
-  var instance = parallel({
-    released: released
+  const instance = parallel({
+    released
   })
-  var count = 2
-  var obj = {}
+  let count = 2
+  const obj = {}
 
   instance(obj, [something, something], 42, function done (err, results) {
     t.notOk(err, 'no error')
@@ -333,7 +333,7 @@ test('accumulates results in order', function (t) {
   function something (arg, cb) {
     t.equal(obj, this)
     t.equal(arg, 42)
-    var value = count--
+    const value = count--
     setTimeout(function () {
       cb(null, value)
     }, 10 * value)
@@ -347,11 +347,11 @@ test('accumulates results in order', function (t) {
 test('call without arg if there is no arg with no results', function (t) {
   t.plan(3)
 
-  var instance = parallel({
+  const instance = parallel({
     results: false
   })
-  var count = 0
-  var obj = {}
+  let count = 0
+  const obj = {}
 
   instance(obj, [something, something], 42, function done () {
     t.equal(count, 2, 'all functions must have completed')
@@ -369,9 +369,9 @@ test('call without arg if there is no arg with no results', function (t) {
 test('call without arg if there is no arg with results', function (t) {
   t.plan(3)
 
-  var instance = parallel()
-  var count = 0
-  var obj = {}
+  const instance = parallel()
+  let count = 0
+  const obj = {}
 
   instance(obj, [something, something], 42, function done () {
     t.equal(count, 2, 'all functions must have completed')
@@ -389,9 +389,9 @@ test('call without arg if there is no arg with results', function (t) {
 test('each support with nothing to process', function (t) {
   t.plan(2)
 
-  var instance = parallel()
-  var obj = {}
-  var args = []
+  const instance = parallel()
+  const obj = {}
+  const args = []
 
   instance(obj, something, args, function done (err, results) {
     t.error(err)
@@ -406,9 +406,9 @@ test('each support with nothing to process', function (t) {
 test('each without results support with nothing to process', function (t) {
   t.plan(1)
 
-  var instance = parallel({ results: false })
-  var obj = {}
-  var args = []
+  const instance = parallel({ results: false })
+  const obj = {}
+  const args = []
 
   instance(obj, something, args, function done () {
     t.pass('done called')
@@ -422,9 +422,9 @@ test('each without results support with nothing to process', function (t) {
 test('each works with arrays of objects', function (t) {
   t.plan(3)
 
-  var instance = parallel({ results: false })
-  var obj = {}
-  var args = [{ val: true }, { val: true }]
+  const instance = parallel({ results: false })
+  const obj = {}
+  const args = [{ val: true }, { val: true }]
 
   instance(obj, something, args, function () {
     t.ok('done called')
@@ -437,15 +437,15 @@ test('each works with arrays of objects', function (t) {
 })
 
 test('using same instance multiple times clears the state of result holder', function (t) {
-  var total = 10
+  const total = 10
   t.plan(total)
 
-  var instance = parallel({
+  const instance = parallel({
     results: false,
-    released: released
+    released
   })
-  var obj = {}
-  var count = 0
+  const obj = {}
+  let count = 0
 
   function released () {
     if (count < total) {
