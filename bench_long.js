@@ -1,3 +1,5 @@
+'use strict'
+
 const max = 1000000
 const parallel = require('./')()
 const parallelNoResults = require('./')({ results: false })
