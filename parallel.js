@@ -1,25 +1,24 @@
 'use strict'
 
-var xtend = require('xtend')
-var reusify = require('reusify')
-var defaults = {
+const reusify = require('reusify')
+const defaults = {
   released: nop,
   results: true
 }
 
 function fastparallel (options) {
-  options = xtend(defaults, options)
+  options = Object.assign({}, defaults, options)
 
-  var released = options.released
-  var queue = reusify(options.results ? ResultsHolder : NoResultsHolder)
-  var queueSingleCaller = reusify(SingleCaller)
-  var goArray = options.results ? goResultsArray : goNoResultsArray
-  var goFunc = options.results ? goResultsFunc : goNoResultsFunc
+  const released = options.released
+  const queue = reusify(options.results ? ResultsHolder : NoResultsHolder)
+  const queueSingleCaller = reusify(SingleCaller)
+  const goArray = options.results ? goResultsArray : goNoResultsArray
+  const goFunc = options.results ? goResultsFunc : goNoResultsFunc
 
   return parallel
 
   function parallel (that, toCall, arg, done) {
-    var holder = queue.get()
+    const holder = queue.get()
     done = done || nop
     if (toCall.length === 0) {
       done.call(that)
@@ -51,10 +50,10 @@ function fastparallel (options) {
   }
 
   function goResultsFunc (that, toCall, arg, holder) {
-    var singleCaller = null
+    let singleCaller = null
     holder._count = arg.length
     holder._results = new Array(holder._count)
-    for (var i = 0; i < arg.length; i++) {
+    for (let i = 0; i < arg.length; i++) {
       singleCaller = queueSingleCaller.get()
       singleCaller._release = singleCallerRelease
       singleCaller.parent = holder
@@ -68,11 +67,11 @@ function fastparallel (options) {
   }
 
   function goResultsArray (that, funcs, arg, holder) {
-    var sc = null
-    var tc = nop
+    let sc = null
+    let tc = nop
     holder._count = funcs.length
     holder._results = new Array(holder._count)
-    for (var i = 0; i < funcs.length; i++) {
+    for (let i = 0; i < funcs.length; i++) {
       sc = queueSingleCaller.get()
       sc._release = singleCallerRelease
       sc.parent = holder
@@ -90,7 +89,7 @@ function fastparallel (options) {
 
   function goNoResultsFunc (that, toCall, arg, holder) {
     holder._count = arg.length
-    for (var i = 0; i < arg.length; i++) {
+    for (let i = 0; i < arg.length; i++) {
       if (that) {
         toCall.call(that, arg[i], holder.release)
       } else {
@@ -100,9 +99,9 @@ function fastparallel (options) {
   }
 
   function goNoResultsArray (that, funcs, arg, holder) {
-    var toCall = null
+    let toCall = null
     holder._count = funcs.length
-    for (var i = 0; i < funcs.length; i++) {
+    for (let i = 0; i < funcs.length; i++) {
       toCall = funcs[i]
       if (that) {
         if (toCall.length === 1) {
@@ -128,10 +127,10 @@ function NoResultsHolder () {
   this._release = null
   this.next = null
 
-  var that = this
-  var i = 0
+  const that = this
+  let i = 0
   this.release = function () {
-    var cb = that._callback
+    const cb = that._callback
     if (++i === that._count || that._count === 0) {
       if (that._callThat) {
         cb.call(that._callThat)
@@ -152,7 +151,7 @@ function SingleCaller () {
   this.parent = null
   this.next = null
 
-  var that = this
+  const that = this
   this.release = function (err, result) {
     that.parent.release(err, that.pos, result)
     that.pos = -1
@@ -170,14 +169,14 @@ function ResultsHolder () {
   this._release = nop
   this.next = null
 
-  var that = this
-  var i = 0
+  const that = this
+  let i = 0
   this.release = function (err, pos, result) {
     that._err = that._err || err
     if (pos >= 0) {
       that._results[pos] = result
     }
-    var cb = that._callback
+    const cb = that._callback
     if (++i === that._count || that._count === 0) {
       if (that._callThat) {
         cb.call(that._callThat, that._err, that._results)

@@ -28,21 +28,20 @@
   },
   "homepage": "https://github.com/mcollina/fastparallel",
   "devDependencies": {
-    "async": "^3.1.0",
-    "coveralls": "^3.0.5",
+    "async": "^3.2.6",
+    "coveralls": "^3.1.1",
     "fastbench": "^1.0.1",
-    "faucet": "0.0.1",
+    "faucet": "0.0.4",
     "insync": "^2.1.1",
-    "items": "^2.1.2",
-    "neo-async": "^2.6.1",
-    "nyc": "^15.1.0",
+    "items": "^2.2.1",
+    "neo-async": "^2.6.2",
+    "nyc": "^17.1.0",
     "parallelize": "^3.0.1",
     "pre-commit": "^1.2.2",
-    "standard": "^16.0.4",
-    "tape": "^5.3.1"
+    "standard": "^17.1.2",
+    "tape": "^5.9.0"
   },
   "dependencies": {
-    "reusify": "^1.0.4",
-    "xtend": "^4.0.2"
+    "reusify": "^1.1.0"
   }
 }

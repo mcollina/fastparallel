@@ -1,12 +1,14 @@
-var max = 1000000
-var parallel = require('./')()
-var parallelNoResults = require('./')({ results: false })
-var bench = require('fastbench')
-var async = require('async')
-var neo = require('neo-async')
-var insync = require('insync')
-var items = require('items')
-var parallelize = require('parallelize')
+'use strict'
+
+const max = 1000000
+const parallel = require('./')()
+const parallelNoResults = require('./')({ results: false })
+const bench = require('fastbench')
+const async = require('async')
+const neo = require('neo-async')
+const insync = require('insync')
+const items = require('items')
+const parallelize = require('parallelize')
 
 function benchFastParallel (done) {
   parallel(null, [somethingP, somethingP, somethingP], 42, done)
@@ -41,7 +43,7 @@ function benchItemsParallel (done) {
 }
 
 function benchParallelize (done) {
-  var next = parallelize(done)
+  const next = parallelize(done)
 
   somethingA(next())
   somethingA(next())
@@ -72,8 +74,8 @@ function benchInsyncMap (done) {
   insync.map([1, 2, 3], somethingP, done)
 }
 
-var nextDone
-var nextCount
+let nextDone
+let nextCount
 
 function benchSetImmediate (done) {
   nextCount = 3
@@ -98,7 +100,7 @@ function somethingA (cb) {
   setImmediate(cb)
 }
 
-var run = bench([
+const run = bench([
   benchSetImmediate,
   benchAsyncParallel,
   benchAsyncEach,

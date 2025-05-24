@@ -1,4 +1,6 @@
-var parallel = require('./')({
+'use strict'
+
+const parallel = require('./')({
   // this is a function that will be called
   // when a parallel completes
   released: completed,
